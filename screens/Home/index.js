@@ -1,14 +1,14 @@
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from "react-native"
+import { Dimensions, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { EvilIcons } from '@expo/vector-icons';
 import PieChart from "react-native-pie-chart";
 import React from "react";
 import { AntDesign } from '@expo/vector-icons';
+import { ProgressBar } from "react-native-paper";
 
 const Home = () => {
 
     const widthAndHeight = 250
-    const series = [120,180]
     const sliceColor = ['pink', 'white']
 
     const [money, setMoney] = React.useState(1000)
@@ -19,7 +19,7 @@ const Home = () => {
     }
 
     return (
-        <SafeAreaView>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.container}>
             <View style={style.topContainer}>
                 <View>
@@ -33,7 +33,7 @@ const Home = () => {
             <Text style={style.money}>${money}</Text>
             <PieChart
             widthAndHeight={widthAndHeight}
-            series={series}
+            series={[money/100,180]}
             sliceColor={sliceColor}
             coverRadius={0.7}
             coverFill={'white'}
@@ -44,21 +44,100 @@ const Home = () => {
                 <Pressable onPress={() => handleChangeSavings()}><AntDesign name="plus" size={24} color="black" /></Pressable>
             </View>
             <View style={style.bottomContainer}>
-
+                <View>
+                    <Text>January</Text>
+                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.3} color={'green'}/>
+                </View>
+                <View>
+                    <Text>February</Text>
+                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.6} color={'green'}/>
+                </View>
+                <View>
+                    <Text>March</Text>
+                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.1} color={'green'}/>
+                </View>
+            </View>
+            <View style={style.bottomSecondContainer}>
+                <View>
+                    <Text style={style.statement}>Statement</Text>
+                </View>
+                <View style={style.months}>
+                    <Text style={style.month}>January</Text>
+                    <View style={style.eachMonth}>
+                        <Text>1 January</Text>
+                        <Text>+ $20</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>15 January</Text>
+                        <Text>+ $100</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>25 January</Text>
+                        <Text>+ $50</Text>
+                    </View>
+                </View>
+                <View style={style.months}>
+                    <Text style={style.month}>February</Text>
+                    <View style={style.eachMonth}>
+                        <Text>1 February</Text>
+                        <Text>+ $60</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>15 February</Text>
+                        <Text>+ $200</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>25 February</Text>
+                        <Text>+ $20</Text>
+                    </View>
+                </View>
+                <View style={style.months}>
+                    <Text style={style.month}>March</Text>
+                    <View style={style.eachMonth}>
+                        <Text>1 March</Text>
+                        <Text>+ $10</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>15 March</Text>
+                        <Text>+ $10</Text>
+                    </View>
+                    <View style={style.eachMonth}>
+                        <Text>25 March</Text>
+                        <Text>+ $20</Text>
+                    </View>
+                </View>
             </View>
         </View>
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 
 export default Home
 
 const style = StyleSheet.create({
+    month: {
+        fontWeight: 'bold'
+    },
+    eachMonth: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 10
+    },
+    months: {
+        paddingTop: 10
+    },
+    statement: {
+        fontWeight: 'bold'
+    },
+    bottomSecondContainer: {
+        paddingTop: 30
+    },
     input: {
         width: Dimensions.get('screen').width/2,
         backgroundColor: 'white',
         padding: 10,
-        marginRight: 10
+        marginRight: 10,
+        borderRadius: 10
     },
     middleSecondContainer: {
         flexDirection: 'row',
@@ -72,14 +151,19 @@ const style = StyleSheet.create({
         height: Dimensions.get('screen').height/2.5
     },
     bottomContainer: {
-        backgroundColor: 'black',
+        paddingTop: 50,
+        height: Dimensions.get('screen').height/4,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     savings: {
         fontSize: 40,
         fontWeight: 'bold'
     },
     container: {
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        backgroundColor: '#fbe4fb',
+        marginTop: 50
     },
     topContainer: {
         flexDirection: 'row',
