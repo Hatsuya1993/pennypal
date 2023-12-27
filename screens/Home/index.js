@@ -1,5 +1,4 @@
-import { Dimensions, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { Dimensions, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
 import { EvilIcons } from '@expo/vector-icons';
 import PieChart from "react-native-pie-chart";
 import React from "react";
@@ -12,6 +11,7 @@ const Home = () => {
     const sliceColor = ['pink', 'white']
 
     const [money, setMoney] = React.useState(1000)
+    const [goal, _] = React.useState(1500)
     const [cash, setCash] = React.useState("")
 
     const handleChangeSavings = () => {
@@ -21,24 +21,32 @@ const Home = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
         <View style={style.container}>
-            <View style={style.topContainer}>
+        <View>
+        <View style={style.topContainer}>
                 <View>
                     <Text style={style.savings}>Savings</Text>
                 </View>
                 <View>
-                <EvilIcons name="refresh" size={35} color="black" />
+                <EvilIcons name="refresh" size={35} color="white" />
                 </View>
             </View>
+            <Image  style={{height: Dimensions.get('screen').height/4, width: '100%'}} source={require('../../image/newMoney.avif')} />
+        </View>
+            <View style={{position: 'relative', top: -100}}>
             <View style={style.middleContainer}>
             <Text style={style.money}>${money}</Text>
             <PieChart
             widthAndHeight={widthAndHeight}
-            series={[money/100,180]}
+            series={[money, goal-money]}
             sliceColor={sliceColor}
             coverRadius={0.7}
             coverFill={'white'}
           />
             </View>
+                <View style={style.goalContainer}>
+                    <Text style={style.goal}>Goal</Text>
+                    <Text>${goal}</Text>
+                </View>
             <View style={style.middleSecondContainer}>
                 <TextInput value={cash} onChangeText={setCash} style={style.input} placeholder="Input cash"/>
                 <Pressable onPress={() => handleChangeSavings()}><AntDesign name="plus" size={24} color="black" /></Pressable>
@@ -46,15 +54,15 @@ const Home = () => {
             <View style={style.bottomContainer}>
                 <View>
                     <Text>January</Text>
-                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.3} color={'green'}/>
+                    <ProgressBar style={{height: 20, borderRadius: 20}} progress={0.3} color={'#4bc87f'}/>
                 </View>
                 <View>
                     <Text>February</Text>
-                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.6} color={'green'}/>
+                    <ProgressBar style={{height: 20, borderRadius: 20}} progress={0.6} color={'#4bc87f'}/>
                 </View>
                 <View>
                     <Text>March</Text>
-                    <ProgressBar style={{height: 15, borderRadius: 20}} progress={0.1} color={'green'}/>
+                    <ProgressBar style={{height: 20, borderRadius: 20}} progress={0.1} color={'#4bc87f'}/>
                 </View>
             </View>
             <View style={style.bottomSecondContainer}>
@@ -107,6 +115,7 @@ const Home = () => {
                     </View>
                 </View>
             </View>
+            </View>
         </View>
         </ScrollView>
     )
@@ -115,6 +124,14 @@ const Home = () => {
 export default Home
 
 const style = StyleSheet.create({
+    goalContainer: {
+        alignItems: 'center',
+        paddingBottom: 10,
+    },
+    goal: {
+        fontWeight: 'bold',
+        fontSize: 20
+    },
     month: {
         fontWeight: 'bold'
     },
@@ -130,7 +147,8 @@ const style = StyleSheet.create({
         fontWeight: 'bold'
     },
     bottomSecondContainer: {
-        paddingTop: 30
+        paddingTop: 30,
+        paddingHorizontal: 20,
     },
     input: {
         width: Dimensions.get('screen').width/2,
@@ -148,9 +166,10 @@ const style = StyleSheet.create({
     middleContainer: {
         justifyContent: 'center',
         alignItems: "center",
-        height: Dimensions.get('screen').height/2.5
+        height: Dimensions.get('screen').height/2.8,
     },
     bottomContainer: {
+        paddingHorizontal: 20,
         paddingTop: 50,
         height: Dimensions.get('screen').height/4,
         flexDirection: 'column',
@@ -158,16 +177,20 @@ const style = StyleSheet.create({
     },
     savings: {
         fontSize: 40,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'white'
     },
     container: {
-        paddingHorizontal: 10,
-        backgroundColor: '#fbe4fb',
-        marginTop: 50
+        paddingTop: 50,
+        backgroundColor: '#dcd6f7'
     },
     topContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        position: 'relative',
+        top:50,
+        zIndex: 1
     }
 })
